@@ -7,6 +7,10 @@ from utils.spotify_client import SpotifyClient
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return "<h1>TESTE 2</h1>"
+
 @app.route('/teste')
 def teste():
     spotify_client = SpotifyClient()
