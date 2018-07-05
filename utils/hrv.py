@@ -14,6 +14,8 @@
 # built-in
 
 # 3rd party
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.patches as patches
 import matplotlib.path as path
 import matplotlib.pyplot as plt
