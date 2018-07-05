@@ -23,10 +23,6 @@ def uri_get_red():
     spotify_client.authorize_spotify_client(code)
     return "redirected"
 
-@app.route('/test2', methods=['GET'])
-def uri_get_red():
-    return "TESTE 2"
-
 from controllers.user_controller import *
 # from playlist_controller import *
 # from reaction_controller import *
