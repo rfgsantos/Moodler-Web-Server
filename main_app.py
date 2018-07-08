@@ -9,24 +9,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "<h1>TESTE 2</h1>"
+    return "<h1>MOODLER API</h1>"
 
-@app.route('/teste')
-def teste():
-    spotify_client = SpotifyClient()
-    return redirect(spotify_client.url_redirect)
-
-@app.route('/redirect', methods=['GET'])
-def uri_get_red():
-    code = request.args.get('code')
-    spotify_client = SpotifyClient()
-    spotify_client.authorize_spotify_client(code)
-    return "redirected"
-
-@app.route('/testepost', methods=['POST'])
+@app.route('/hrv_modify_playlist', methods=['POST'])
 def testesssssss():
-    print(request.json)
-    print(request.headers)
+    headers = request.headers
+    print("token -> {}".format(headers.get("Authorization").split(" ")[1]))
+    sp = SpotifyClient(headers.get("Authorization").split(" ")[1])
+    sp.authorize_spotify_client()
     return "d"
 
 from controllers.user_controller import *
