@@ -25,8 +25,8 @@ def uri_get_red():
 
 @app.route('/testepost', methods=['POST'])
 def testesssssss():
-    print(request.form)
     print(request.json)
+    print(request.headers)
     return "d"
 
 from controllers.user_controller import *
