@@ -4,9 +4,9 @@ import spotipy.oauth2 as oauth
 
 class SpotifyClient(object):
 
-    def __init__(self, token):
-        self.token = token
-        self.spotify = sp.Spotify(auth=self.token)
+    def __init__(self):
+        self.token = None
+        self.spotify = None
 
     #singleton
     def __new__(cls):
