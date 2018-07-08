@@ -23,7 +23,7 @@ def uri_get_red():
     spotify_client.authorize_spotify_client(code)
     return "redirected"
 
-@app.route('/testepost')
+@app.route('/testepost', methods=['POST'])
 def testesssssss():
     print(request.form)
     return "d"
@@ -36,8 +36,8 @@ from controllers.user_controller import *
 
 
 
-if __name__ == "__main__":
-    Classifier()
+# if __name__ == "__main__":
+    # Classifier()
     # app.run(host='0.0.0.0',debug=True,port=4000)
 
 
