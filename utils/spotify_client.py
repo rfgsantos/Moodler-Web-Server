@@ -17,6 +17,10 @@ class SpotifyClient(object):
     def authorize_spotify_client(self):
         print(self.spotify.user_playlist_create('rsantos92','HRV TESTE3')) 
     
+    def set_token(self, token):
+        self.token = token
+        self.spotify = sp.Spotify(auth=self.token)
+
     def create_playlist(self, tracks):
         cenas
 

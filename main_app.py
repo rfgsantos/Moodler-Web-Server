@@ -15,7 +15,8 @@ def index():
 def testesssssss():
     headers = request.headers
     print("token -> {}".format(headers.get("Authorization").split(" ")[1]))
-    sp = SpotifyClient(headers.get("Authorization").split(" ")[1])
+    sp = SpotifyClient()
+    sp.set_token(headers.get("Authorization").split(" ")[1])
     sp.authorize_spotify_client()
     return "d"
 
