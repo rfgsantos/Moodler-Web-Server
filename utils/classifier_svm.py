@@ -14,7 +14,7 @@ class Classifier(object):
     def __init__(self):
         self.classifier = svm.SVC()
         self.firebase = FirebaseConnection()
-        self.check_existing_file()
+        self._check_existing_file()
     
     def __new__(cls):
        if not hasattr(cls, 'instance'):
@@ -39,7 +39,7 @@ class Classifier(object):
                 self.classifier = pickle.load(file) 
         except Exception as e:
             print("Error while checking file -> {}".format(str(e))) 
-            self.prepare_to_fit()
+            self._prepare_to_fit()
     
     def _dump_training(self):
         print("dump_training()")
@@ -62,10 +62,13 @@ class Classifier(object):
         hrv = np.empty([len(data),Classifier.features])
         for index, data_value in enumerate(data):
             like_dislike_array[index] = bool(data_value.get('evaluation'))
-            hrv[index] = self.to_numpy_array(Hrv(eval(data[0].get('hrv')),16000)[Classifier.features_index])
+            hrv[index] = self._to_numpy_array(Hrv(eval(data[0].get('hrv')),16000)[Classifier.features_index])
+            break
+        
+        print(hrv)
 
-        self.train_classifier(hrv,like_dislike_array)
-        self.dump_training()
+        self._train_classifier(hrv,like_dislike_array)
+        self._dump_training()
     
 
 

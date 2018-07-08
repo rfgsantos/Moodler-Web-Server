@@ -23,6 +23,11 @@ def uri_get_red():
     spotify_client.authorize_spotify_client(code)
     return "redirected"
 
+@app.route('/testepost')
+def testesssssss():
+    print(request.form)
+    return "d"
+
 from controllers.user_controller import *
 # from playlist_controller import *
 # from reaction_controller import *
@@ -32,7 +37,8 @@ from controllers.user_controller import *
 
 
 if __name__ == "__main__":
-    app.run()
+    Classifier()
+    # app.run(host='0.0.0.0',debug=True,port=4000)
 
 
     

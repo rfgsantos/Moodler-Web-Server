@@ -441,22 +441,25 @@ def hrv(R, sampling_rate):
     R /= Fs
     
     # compute RR and exclude values outside physiological limits (HR > 200 and HR < 40)
-    RR = np.diff(R)
-    ts = R[:-1] + RR / 2
+
+    # RR = np.diff(R)
+    # ts = R[:-1] + RR / 2
+
+    ts = R / 2
     
     #remove hr out of physiological accepted values
-    indy = np.nonzero(np.logical_and(RR >= 60./220, RR <= 60./40))
+    indy = np.nonzero(np.logical_and(R >= 60./220, R <= 60./40))
     ts = ts[indy]
-    RR = RR[indy]
+    R = R[indy]
     
-    hr = 60./RR
+    hr = 60./R
     
 #    print hr
     # remove outliers
     index = 0
     removeIndex = []
     
-    for i in range(0,len(RR)-1,1):
+    for i in range(0,len(R)-1,1):
         if abs(hr[i+1]-hr[index]) > 40: # and abs(ts[i+1]-ts[index])<1500:
             if index == 0 and abs(hr[index]-np.mean(hr))>20:
                 index = i+1
@@ -466,9 +469,9 @@ def hrv(R, sampling_rate):
             index = i+1
       
     ts = np.delete(ts, np.array(removeIndex))
-    RR = np.delete(RR, np.array(removeIndex))
+    R = np.delete(R, np.array(removeIndex))
 
-    if len(RR)<5:
+    if len(R)<5:
         HR, RMSSD, mNN, sdNN, mHR, sdHR, bins, pNNx, pNN50 = [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]
         its, iRR, iHR, VLF, LF, HF, TF, L2HF, nuLF, nuHF, f, pwr = [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]
         SD1, SD2, SD2SD1, eig1, eig2, SD1pca, SD2pca, SD2SD1pca, Vpca, mse_V, error_SD1, error_SD2, error_SD2SD1, alpha, area = [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1],[-1], [-1], [-1]
@@ -516,6 +519,6 @@ def hrv(R, sampling_rate):
         'alpha':    alpha,
         'area': area
     }
-    
+    RR = R
     return ts, RR, HR, its, iRR, iHR, f, pwr, Vpca, features
 
