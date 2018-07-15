@@ -14,14 +14,17 @@ class SpotifyClient(object):
            cls.instance = super(SpotifyClient, cls).__new__(cls)
        return cls.instance
 
-    def authorize_spotify_client(self):
-        print(self.spotify.user_playlist_create('rsantos92','HRV TESTE3')) 
+    def add_tracks_to_playlist(self,playlist_id,user_id,track_ids):
+        self.spotify.user_playlist_add_tracks(user_id,playlist_id,tracks_ids)
+
+    def search_for_top_tracks(self, artist_id):
+        return self.spotify.artist_top_tracks(artist_id)
+    
+    def remove_track_from_playlist(self,user_id, playlist_id, track_ids):
+        self.spotify.user_playlist_remove_all_occurrences_of_tracks(user_id,playlist_id,track_ids)
     
     def set_token(self, token):
         self.token = token
         self.spotify = sp.Spotify(auth=self.token)
-
-    def create_playlist(self, tracks):
-        cenas
 
     

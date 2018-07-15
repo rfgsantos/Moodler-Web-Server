@@ -359,7 +359,7 @@ def nonlinear_features(R, Fs):
     
     return SD1, SD2, SD2SD1, eig1, eig2, SD1pca, SD2pca, SD2SD1pca, Vpca, mse_V, error_SD1, error_SD2, error_SD2SD1, alpha, area #incluir en outputs
 
-def hrv(R, sampling_rate):
+def hrv(RR, sampling_rate):
     """Compute Heart Rate Variability (HRV) metrics
     from a sequence of R peak locations.
     
@@ -429,49 +429,44 @@ def hrv(R, sampling_rate):
     """
     
     # ensure array of floats
-    R = np.array(R, dtype='float')
+    RR = np.array(RR, dtype='float')
     
-    if len(R) < 4:
+    if len(RR) < 4:
         raise ValueError("Not enough R peaks to perform computations.")
     
     # ensure float
     Fs = float(sampling_rate)
-    
     # convert samples to time units
-    R /= Fs
-    
+    RR /= Fs
     # compute RR and exclude values outside physiological limits (HR > 200 and HR < 40)
-
     # RR = np.diff(R)
     # ts = R[:-1] + RR / 2
 
-    ts = R / 2
-    
+    ts = np.array([RR[0]])
+    for i in range(1,len(RR)):
+        ts = np.append(ts, ts[i-1]+RR[i])
+
     #remove hr out of physiological accepted values
-    indy = np.nonzero(np.logical_and(R >= 60./220, R <= 60./40))
+    indy = np.nonzero(np.logical_and(RR >= 60./220, RR <= 60./40))
     ts = ts[indy]
-    R = R[indy]
-    
-    hr = 60./R
-    
-#    print hr
+    RR = RR[indy]
+    hr = 60./RR
+
     # remove outliers
     index = 0
     removeIndex = []
-    
-    for i in range(0,len(R)-1,1):
+    for i in range(0,len(RR)-1,1):
         if abs(hr[i+1]-hr[index]) > 40: # and abs(ts[i+1]-ts[index])<1500:
             if index == 0 and abs(hr[index]-np.mean(hr))>20:
                 index = i+1
-                
             removeIndex.append(i+1)
         else:
             index = i+1
-      
-    ts = np.delete(ts, np.array(removeIndex))
-    R = np.delete(R, np.array(removeIndex))
 
-    if len(R)<5:
+    ts = np.delete(ts, np.array(removeIndex))
+    RR = np.delete(RR, np.array(removeIndex))
+    
+    if len(RR)<5:
         HR, RMSSD, mNN, sdNN, mHR, sdHR, bins, pNNx, pNN50 = [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]
         its, iRR, iHR, VLF, LF, HF, TF, L2HF, nuLF, nuHF, f, pwr = [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]
         SD1, SD2, SD2SD1, eig1, eig2, SD1pca, SD2pca, SD2SD1pca, Vpca, mse_V, error_SD1, error_SD2, error_SD2SD1, alpha, area = [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1],[-1], [-1], [-1]
@@ -484,7 +479,7 @@ def hrv(R, sampling_rate):
         its, iRR, iHR, VLF, LF, HF, TF, L2HF, nuLF, nuHF, f, pwr = bux
         
         #nonlinear features (geometric features)
-        cux = nonlinear_features(R, Fs)
+        cux = nonlinear_features(RR, Fs)
         SD1, SD2, SD2SD1, eig1, eig2, SD1pca, SD2pca, SD2SD1pca, Vpca, mse_V, error_SD1, error_SD2, error_SD2SD1, alpha, area = cux
         
     
@@ -516,9 +511,9 @@ def hrv(R, sampling_rate):
         'error_SD1': error_SD1, 
         'error_SD2': error_SD2, 
         'error_SD2SD1': error_SD2SD1,
-        'alpha':    alpha,
+        'alpha': alpha,
         'area': area
     }
-    RR = R
+    
     return ts, RR, HR, its, iRR, iHR, f, pwr, Vpca, features
 
