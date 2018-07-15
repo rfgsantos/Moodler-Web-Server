@@ -24,8 +24,8 @@ class PlaylistDao:
         return list(map(lambda playlist: self.map_playlist(playlist),self.db.getQueryResult()))
 
     def insert_playlist(self,json_params):
-        params = (json_params['id'],json_params['user_id'],json_params['comment'])
-        query = "INSERT INTO playlist (id,useri_id,comment) VALUES ('%s','%s','%s')" % params
+        params = (json_params['id'],json_params['user_id'],json_params['playlist_id'])
+        query = "INSERT INTO playlist (id,useri_id,playlist_id) VALUES ('%s','%s','%s')" % params
         self.db.executeQuery(query, isInsert=True)
         return "saved"
 
@@ -38,6 +38,6 @@ class PlaylistDao:
         playlist = Playlist(
             playlist_input['id'],
             playlist_input['user_id'],
-            playlist_input['comment']
+            playlist_input['playlist_id']
         )
         return playlist.__dict__

@@ -17,9 +17,8 @@ class UserDao:
         return list(map(lambda user: self.map_user(user),self.db.getQueryResult()))
 
     def insert_user(self,json_params):
-        params = ("5","laola","hbhbhbh","dfsdfsdfs",datetime.now().date())
-        query = "INSERT INTO user (id, name, access_token, refresh_token, expires_at) \
-        VALUES ('%s','%s','%s','%s','%s')" % params
+        params = (json_params['id'], json_params['user_id'], json_params['date'])
+        query = "INSERT INTO user (id, user_id, date) VALUES ('%s','%s','%s')" % params
         self.db.executeQuery(query,isInsert=True)
         return "saved"
     
@@ -31,10 +30,8 @@ class UserDao:
     def map_user(self,user_input):
         user = User(
             user_input['id'],
-            user_input['name'],
-            user_input['access_token'],
-            user_input['refresh_token'],
-            user_input['expires_at']
+            user_input['user_id'],
+            user_input['date'],
         )
         return user.__dict__
 

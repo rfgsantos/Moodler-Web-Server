@@ -21,9 +21,8 @@ class ReactionDao:
         return list(map(lambda reaction: self.map_reaction(reaction), self.db.getQueryResult()))
     
     def insert_reaction(self,json_params):
-        params = (json_params['id'],json_params['user_id'],json_params['track_id'],json_params['hrv'],json_params['date'],json_params['gps'])
-        query = "INSERT INTO reaction (id,user_id,track_id,hrv,date,gps) \
-        VALUES ('%s','%s','%s','%s','%s','%s')" % params
+        params = (json_params['id'],json_params['user_id'],json_params['track_id'],json_params['hrv'],json_params['evaluation'])
+        query = "INSERT INTO reaction (id,user_id,track_id,hrv,evaluation) VALUES ('%s','%s','%s','%s','%s')" % params
         self.db.executeQuery(query,isInsert=True)
         return "saved"
 
@@ -38,7 +37,6 @@ class ReactionDao:
             reaction_input['user_id'],
             reaction_input['track_id'],
             reaction_input['hrv'],
-            reaction_input['date'],
-            reaction_input['gps']
+            reaction_input['evaluation']
         )
         return reaction.__dict__

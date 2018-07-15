@@ -23,7 +23,10 @@ class Classifier(object):
 
     def get_classification(self,hrv):
         print("get_classification()")
-        return self.classifier.predict(hrv)[0]
+        return self.classifier.predict([self._to_numpy_array(Hrv(eval(hrv),128)[Classifier.features_index])])[0]
+
+    def train_after_playlist(self):
+        self._prepare_to_fit()
 
     def _train_classifier(self,array_x,array_y):
         print("_train_classifier()")
@@ -70,8 +73,7 @@ class Classifier(object):
         self._train_classifier(hrv,like_dislike_array)
         self._dump_training()
 
-    def train_after_playlist(self):
-        self._prepare_to_fit()
+
     
 
 

@@ -1,12 +1,12 @@
 class Reaction:
 
-    def __init__(self,id,user_id,track_id,hrv,date,gps):
+    def __init__(self,id,user_id,track_id,hrv,evaluation):
         self.id = id
         self.user_id = user_id
         self.track_id = track_id
         self.hrv = hrv
-        self.date = date
-        self.gps = gps
+        self.evaluation = evaluation
+
     
     def get_id(self):
         return self.id
@@ -20,8 +20,6 @@ class Reaction:
     def get_hrv(self):
         return self.hrv
     
-    def get_date(self):
-        return self.date
-
-    def get_gps(self):
-        return self.gps
+    def get_evaluation(self):
+        return self.evaluation
+    

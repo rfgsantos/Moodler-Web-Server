@@ -23,10 +23,8 @@ class TrackDao:
         return list(map(lambda track: self.map_track(track),self.db.getQueryResult()))
     
     def insert_track(self,json_params):
-        params = (json_params['id'],json_params['durantio_sec'],json_params['danceability'],json_params['energy'],json_params['loudness'],
-        json_params['track_key'],json_params['valance'],json_params['tempo'],json_params['time_signature'])
-        query = "INSERT INTO track (id,duration_sec,danceability,energy,loudness,track_key,valance,tempo,time_signature) \
-        VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s')" % params
+        params = (json_params['id'],json_params['track_id'],json_params['playlist_id'])
+        query = "INSERT INTO track (id,track_id,playlist_id) VALUES ('%s','%s','%s')" % params
         self.db.executeQuery(query,isInsert=True)
         return "saved"
 
@@ -38,13 +36,7 @@ class TrackDao:
     def map_track(self,track_input):   
         track = Track(
             track_input['id'],
-            track_input['duration_sec'],
-            track_input['danceability'],
-            track_input['energy'],
-            track_input['loudness'],
-            track_input['track_key'],
-            track_input['valance'],
-            track_input['tempo'],
-            track_input['time_signature']
+            track_input['track_id'],
+            track_input['playlist_id'],
         )
         return track.__dict__

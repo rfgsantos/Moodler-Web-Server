@@ -14,7 +14,7 @@ class SpotifyClient(object):
            cls.instance = super(SpotifyClient, cls).__new__(cls)
        return cls.instance
 
-    def add_tracks_to_playlist(self,playlist_id,user_id,track_ids):
+    def add_tracks_to_playlist(self,playlist_id,user_id,tracks_ids):
         self.spotify.user_playlist_add_tracks(user_id,playlist_id,tracks_ids)
 
     def search_for_top_tracks(self, artist_id):
