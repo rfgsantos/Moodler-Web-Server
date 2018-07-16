@@ -21,10 +21,7 @@ class Business:
         user = self.user_dao.get_user_by_id(user_id)
         playlist = self.playlist_dao.get_playlist_by_id(playlist_id)
 
-        print(user_evaluation)
-        print(bool(eval(user_evaluation)))
-
-        if(user_evaluation):
+        if(bool(user_evaluation)):
             user_evaluation = 1
         else:
             user_evaluation = 0
@@ -55,9 +52,6 @@ class Business:
     def remove_track_from_list(self, playlist_id, user_id, tracks, hrv, current_track_id, user_evaluation):
 
         user = self.user_dao.get_user_by_id(user_id)
-
-        print(user_evaluation)
-        print(bool(user_evaluation))
 
         if(bool(user_evaluation)):
             user_evaluation = 1
