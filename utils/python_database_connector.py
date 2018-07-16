@@ -11,7 +11,7 @@ class DatabaseConnector(object):
        return cls.instance
 
     def __init__(self):
-        self.params = properties.python_db_params
+        self.params = properties.python_db_params_heroku
         self.cnx = None
         self.cursor = None
         self.connect()
