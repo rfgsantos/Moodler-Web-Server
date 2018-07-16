@@ -1,16 +1,17 @@
-import sys
-sys.path.append('../utils')
-sys.path.append('../dtos')
 from datetime import date, datetime, timedelta
-
-from python_database_connector import DatabaseConnector
+from utils.python_database_connector import DatabaseConnector
 from injector import inject as Inject
-from track_dto import Track
+from dtos.track_dto import Track
 
 class TrackDao:
 
     def __init__(self):
         self.db = DatabaseConnector()
+
+    def __new__(cls):
+       if not hasattr(cls, 'instance'):
+           cls.instance = super(TrackDao, cls).__new__(cls)
+       return cls.instance
     
     def get_all_track(self):
         query = "SELECT * FROM track"
@@ -25,13 +26,11 @@ class TrackDao:
     def insert_track(self,json_params):
         params = (json_params['id'],json_params['track_id'],json_params['playlist_id'])
         query = "INSERT INTO track (id,track_id,playlist_id) VALUES ('%s','%s','%s')" % params
-        self.db.executeQuery(query,isInsert=True)
-        return "saved"
+        return self.db.executeQuery(query,isInsert=True)
 
     def delete_track(self,id):
         query = "DELETE FROM track WHERE track.id='%s'" % id
-        self.db.executeQuery(query,isInsert=True)
-        return "deleted"
+        return self.db.executeQuery(query,isInsert=True)
     
     def map_track(self,track_input):   
         track = Track(

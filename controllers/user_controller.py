@@ -1,4 +1,3 @@
-import sys
 from flask import jsonify, request
 from dao.user_dao import UserDao
 from main_app import app
@@ -13,7 +12,7 @@ def get_all_users():
 def get_user_by_id(id):
     return jsonify(userdao.get_user_by_id(id))
 
-@app.route('/users/insert', methods=['GET'])
+@app.route('/users/insert', methods=['POST'])
 def insert_user():
     return jsonify(userdao.insert_user(request.json))
 

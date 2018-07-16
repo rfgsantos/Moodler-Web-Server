@@ -1,10 +1,8 @@
-import sys
-sys.path.append("../utils")
-sys.path.append("../dao")
 from flask import Flask, jsonify, request
-from track_dao import TrackDao
-database_connector = DatabaseConnector()
-trackdao = TrackDao(database_connector)
+from dao.track_dao import TrackDao
+from main_app import app
+
+track_dao = TrackDao()
 
 @app.route('/track', methods=['GET'])
 def get_all_track():
@@ -14,7 +12,7 @@ def get_all_track():
 def get_track_by_id(id):
     return jsonify(trackdao.get_track_by_id(id))
 
-@app.route('/track/insert', methods=['GET'])
+@app.route('/track/insert', methods=['POST'])
 def insert_track():
     return jsonify(trackdao.insert_track(request.json))
 

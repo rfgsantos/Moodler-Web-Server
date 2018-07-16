@@ -11,7 +11,7 @@ class DatabaseConnector(object):
        return cls.instance
 
     def __init__(self):
-        self.params = properties.python_db_params_heroku
+        self.params = properties.python_db_params
         self.cnx = None
         self.cursor = None
         self.connect()
@@ -20,6 +20,7 @@ class DatabaseConnector(object):
         self.cursor.execute(prepared_statement)
         if isInsert:
             self.cnx.commit()
+        return self.cursor.lastrowid
 
     def connect(self):
         try:

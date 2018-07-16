@@ -1,0 +1,4 @@
+DROP TABLE Reaction;
+DROP TABLE Track; 
+DROP TABLE Playlist;
+DROP TABLE User;

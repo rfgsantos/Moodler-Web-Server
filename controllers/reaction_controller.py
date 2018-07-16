@@ -1,10 +1,8 @@
-import sys
-sys.path.append("../utils")
-sys.path.append("../dao")
 from flask import Flask, jsonify, request
-from reaction_dao import ReactionDao
-database_connector = DatabaseConnector()
-reactiondao = ReactionDao(database_connector)
+from dao.reaction_dao import ReactionDao
+from main_app import app
+
+reaction_dao = ReactionDao()
 
 @app.route('/reaction', methods=['GET'])
 def get_all_reaction():
@@ -14,7 +12,7 @@ def get_all_reaction():
 def get_reaction_by_id(id):
     return jsonify(reactiondao.get_reaction_by_id(id))
 
-@app.route('/reaction/insert', methods=['GET'])
+@app.route('/reaction/insert', methods=['POST'])
 def insert_reaction():
     return jsonify(reactiondao.insert_reaction(request.json))
 

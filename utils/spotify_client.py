@@ -8,7 +8,6 @@ class SpotifyClient(object):
         self.token = None
         self.spotify = None
 
-    #singleton
     def __new__(cls):
        if not hasattr(cls, 'instance'):
            cls.instance = super(SpotifyClient, cls).__new__(cls)
