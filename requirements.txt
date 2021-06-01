@@ -31,7 +31,7 @@ six==1.11.0
 sklearn==0.0
 spotipy==2.4.4
 typing==3.6.4
-urllib3==1.23
+urllib3==1.26.5
 virtualenv==16.0.0
 Werkzeug==0.14.1
 wrapt==1.10.11
